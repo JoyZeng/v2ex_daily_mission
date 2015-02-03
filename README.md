@@ -5,22 +5,10 @@ v2ex daily mission
 
 自动登陆v2ex并领取每日登陆奖励.  
 
-****************
+*************
 
-To-do-list
------------
-
-* 成功签到提示信息改进
-* 每日领取的金币数
-* 连续登陆的天数
-* BeautifulSoup --> LXML
-* 使用log模块记录日志
-* ~~https登陆~~
-* ~~crontab定时执行~~
-* 帮多个账户签到
-* config模块
-
-使用python模拟浏览器的行为登陆v2ex并领取每日登陆奖励.  
+使用方法
+---------------
 
 使用的模块有`requests`和`BeautifulSoup`.可以使用`esay_install`或者`pip`快速安装.
 
@@ -38,12 +26,29 @@ sudo pip install --upgrade requests
 sudo pip install --upgrade BeautifulSoup4
 ```
 
+
 *************************
+
+crontab
+------------------
+
+Use command `crontab -e` add one line to the end.  
+like `10 8 * * * python /home/yxj/Dropbox/python/v2ex.py >> /home/yxj/Dropbox/python/v2ex.log &`
+At every 8:10 the script will run automatically.
+
+**********************
+
+
+实现原理
+---------------------
+
+使用python模拟浏览器的行为登陆v2ex并领取每日登陆奖励.  
+
 
 import packages:
 
 ```
-# -*- coding : utf-8 -*-
+# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
 ```
@@ -181,21 +186,23 @@ page = v2ex_session.get(final_url,headers=headers,verify=False).content
 ![Alt text](http://ww2.sinaimg.cn/large/81d2b157jw1efhre5gb88j20s206g75t.jpg) 
 
 ```
-suceessful = make_soup('http://v2ex.com/mission/daily', 'class', 'icon-ok-sign')
+suceessful = make_soup('http://v2ex.com/mission/daily', 'class', 'fa fa-ok-sign')
 if sucessful:
     print "Sucessful."
 else:
     print "Something wrong."
 ```
 
+*************
+To-do-list
+-----------
 
-*************************
-
-crontab
-------------------
-
-Use command `crontab -e` add one line to the end.  
-like `10 8 * * * python /home/yxj/Dropbox/python/v2ex.py >/dev/null 2>&1`  
-At every 8:10 the script will run automatically.
-
-**********************
+* ~~成功签到提示信息改进~~
+* ~~每日领取的金币数~~ (还需更准确的判断方式)
+* 连续登陆的天数
+* BeautifulSoup --> LXML
+* 使用log模块记录日志
+* ~~https登陆~~
+* ~~crontab定时执行~~
+* 帮多个账户签到
+* config模块
